@@ -2,7 +2,7 @@
 "companyName": "DefaultCompany",
 "productName": "GeometryDashSubzero",
 "productVersion": "0.1",
-"dataUrl": "GeoSzEdit.data.unityweb",
+"dataUrl": "https://html-classic.itch.zone/html/14678081/GeoSzEdit.data.unityweb",
 "wasmCodeUrl": "GeoSzEdit.wasm.code.unityweb",
 "wasmFrameworkUrl": "GeoSzEdit.wasm.framework.unityweb",
 "graphicsAPI": ["WebGL 2.0","WebGL 1.0"],
