@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Martin_MMC</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Courier New', Courier, monospace;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: black;
+            z-index: -2;
+        }
+
+        .profile-card {
+            background: rgba(10, 10, 10, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            border-radius: 16px;
+            padding: 40px 30px;
+            width: 90%;
+            max-width: 350px;
+            text-align: center;
+            z-index: 1;
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.1);
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .avatar {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            border: 2px solid #0ff;
+            /* Cyan border matching the particles */
+            object-fit: cover;
+            margin-bottom: 15px;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
+        }
+
+        .username {
+            margin: 0;
+            font-size: 1.5rem;
+            text-shadow: 0 0 5px #0ff;
+        }
+
+        .bio {
+            font-size: 0.9rem;
+            color: #aaa;
+            margin: 15px 0 25px 0;
+            line-height: 1.4;
+        }
+
+        .links-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .link-btn {
+            display: block;
+            padding: 12px;
+            background: transparent;
+            color: #fff;
+            text-decoration: none;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .link-btn:hover {
+            background: rgba(0, 255, 255, 0.1);
+            border-color: #0ff;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <canvas id="bg-canvas"></canvas>
+
+    <div class="profile-card">
+        <img src="/favicon.ico" alt="Profile Picture" class="avatar">
+
+        <h1 class="username">Martin_MMC</h1>
+        <p class="bio">Ayy wsp im martin i love coding simple websites and video games and when im not coding i love goign on hikes and rock climbing. check out some stuff i do below</p>
+
+        <div class="links-container">
+            <a href="https://github.com/martinmmcyt" class="link-btn">GitHub</a>
+            <a href="https://scratch.mit.edu/users/martin_mmc/" class="link-btn">Scratch</a>
+            <a href="https://marty-games.github.io/" class="link-btn">Marty Games</a>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById("bg-canvas"),
+            ctx = canvas.getContext("2d");
+
+        let particles = [];
+
+        const MAX = window.innerWidth < 600 ? 25 : 50;
+        const DIST = 100;
+        const COLORS = ['#0ff', '#ff0', '#f0f', '#0f0'];
+
+        function init() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            particles = [];
+            for (let i = 0; i < MAX; i++) particles.push(new Particle());
+        }
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 3 + 1;
+                this.vx = (Math.random() - .5) * 1.2;
+                this.vy = (Math.random() - .5) * 1.2;
+                this.color = COLORS[Math.floor(Math.random() * COLORS.length)];
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                if (this.x > canvas.width) this.x = 0;
+                if (this.x < 0) this.x = canvas.width;
+                if (this.y > canvas.height) this.y = 0;
+                if (this.y < 0) this.y = canvas.height;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.shadowColor = this.color;
+                ctx.shadowBlur = 8;
+                ctx.fillStyle = this.color;
+                ctx.fill();
+            }
+        }
+
+        function connect() {
+            for (let a = 0; a < particles.length; a++) {
+                for (let b = a + 1; b < particles.length; b++) {
+                    let dx = particles[a].x - particles[b].x;
+                    let dy = particles[a].y - particles[b].y;
+                    let d = Math.sqrt(dx * dx + dy * dy);
+
+                    if (d < DIST) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(0,255,255,${0.5-d/(2*DIST)})`;
+                        ctx.moveTo(particles[a].x, particles[a].y);
+                        ctx.lineTo(particles[b].x, particles[b].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            connect();
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener("resize", init);
+
+        init();
+        animate();
+    </script>
+</body>
+
+</html>
