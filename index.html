@@ -6,16 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Martin_MMC</title>
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             margin: 0;
-            padding: 0;
+            padding: 20px;
             font-family: 'Courier New', Courier, monospace;
             color: #fff;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            overflow: hidden;
+            overflow-x: hidden;
+            background: #000;
         }
 
         #bg-canvas {
@@ -24,31 +29,30 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: black;
             z-index: -2;
         }
 
         .profile-card {
-            background: rgba(10, 10, 10, 0.7);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border: 1px solid rgba(0, 255, 255, 0.2);
+            background: rgba(10, 10, 10, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 255, 255, 0.25);
             border-radius: 16px;
-            padding: 40px 30px;
-            width: 90%;
-            max-width: 350px;
+            padding: 35px 25px;
+            width: 100%;
+            max-width: 420px;
             text-align: center;
             z-index: 1;
-            box-shadow: 0 0 30px rgba(0, 255, 255, 0.1);
-            animation: fadeIn 1s ease-in-out;
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.15);
+            animation: fadeIn 0.8s ease-in-out;
+            margin: auto;
         }
 
         .avatar {
-            width: 110px;
-            height: 110px;
+            width: 100px;
+            height: 100px;
             border-radius: 50%;
             border: 2px solid #0ff;
-            /* Cyan border matching the particles */
             object-fit: cover;
             margin-bottom: 15px;
             box-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
@@ -56,15 +60,16 @@
 
         .username {
             margin: 0;
-            font-size: 1.5rem;
-            text-shadow: 0 0 5px #0ff;
+            font-size: 1.6rem;
+            text-shadow: 0 0 8px #0ff;
+            letter-spacing: 1px;
         }
 
         .bio {
-            font-size: 0.9rem;
-            color: #aaa;
+            font-size: 0.88rem;
+            color: #ccc;
             margin: 15px 0 25px 0;
-            line-height: 1.4;
+            line-height: 1.5;
         }
 
         .links-container {
@@ -74,23 +79,48 @@
         }
 
         .link-btn {
-            display: block;
-            padding: 12px;
-            background: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 18px;
+            background: rgba(255, 255, 255, 0.03);
             color: #fff;
             text-decoration: none;
             border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
+            border-radius: 10px;
             transition: all 0.3s ease;
             font-weight: bold;
-            letter-spacing: 1px;
+            font-size: 0.95rem;
+        }
+
+        .link-btn .btn-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .link-btn svg {
+            width: 20px;
+            height: 20px;
+            fill: #0ff;
+            transition: fill 0.3s ease;
+        }
+
+        .link-btn .subtext {
+            font-size: 0.75rem;
+            color: #888;
+            font-weight: normal;
         }
 
         .link-btn:hover {
-            background: rgba(0, 255, 255, 0.1);
+            background: rgba(0, 255, 255, 0.12);
             border-color: #0ff;
-            box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+            box-shadow: 0 0 12px rgba(0, 255, 255, 0.35);
             transform: translateY(-2px);
+        }
+
+        .link-btn:hover .subtext {
+            color: #0ff;
         }
 
         @keyframes fadeIn {
@@ -112,15 +142,69 @@
     <canvas id="bg-canvas"></canvas>
 
     <div class="profile-card">
-        <img src="/favicon.ico" alt="Profile Picture" class="avatar">
+        <img src="/favicon.ico" alt="Martin_MMC Avatar" class="avatar">
 
         <h1 class="username">Martin_MMC</h1>
-        <p class="bio">Ayy wsp im martin i love coding simple websites and video games and when im not coding i love goign on hikes and rock climbing. check out some stuff i do below</p>
+        <p class="bio">Hey! I'm Martin. I build web projects and video games. Outside of coding, I'm usually out hiking or rock climbing.</p>
 
         <div class="links-container">
-            <a href="https://github.com/martinmmcyt" class="link-btn">GitHub</a>
-            <a href="https://scratch.mit.edu/users/martin_mmc/" class="link-btn">Scratch</a>
-            <a href="https://marty-games.github.io/" class="link-btn">Marty Games</a>
+            <a href="https://www.youtube.com/@mmc-gaming" target="_blank" rel="noopener noreferrer" class="link-btn">
+                <span class="btn-label">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                    </svg>
+                    MMC Gaming
+                </span>
+                <span class="subtext">Bloxd.io</span>
+            </a>
+            <a href="https://www.youtube.com/@Martin_mmc" target="_blank" rel="noopener noreferrer" class="link-btn">
+                <span class="btn-label">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                    </svg>
+                    Martin_MMC
+                </span>
+                <span class="subtext">LEGO</span>
+            </a>
+
+            <a href="https://martin-mmc.itch.io" target="_blank" rel="noopener noreferrer" class="link-btn">
+                <span class="btn-label">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M3.36 2.01c-.8.15-1.55.77-1.8 1.63-.16.58-.15 14.88 0 15.48.24.83.92 1.48 1.7 1.68 1.25.32 15.73.32 16.98 0 .78-.2 1.46-.85 1.7-1.68.15-.6.16-14.9 0-15.48-.25-.86-1-1.48-1.8-1.63-1.07-.21-15.71-.21-16.78 0zm2.24 3.79h12.8v2.4H5.6V5.8zm0 4.8h12.8v7.6H5.6v-7.6z" />
+                    </svg>
+                    itch.io
+                </span>
+                <span class="subtext">Indie Games</span>
+            </a>
+
+            <a href="https://marty-games.github.io/" target="_blank" rel="noopener noreferrer" class="link-btn">
+                <span class="btn-label">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M21 6H3c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-10 7H9v2H7v-2H5v-2h2V9h2v2h2v2zm4.5 1c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm3-3c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z" />
+                    </svg>
+                    Marty Games
+                </span>
+                <span class="subtext">Coming Soon</span>
+
+            </a>
+
+            <a href="https://github.com/martinmmcyt" target="_blank" rel="noopener noreferrer" class="link-btn">
+                <span class="btn-label">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z" />
+                    </svg>
+                    GitHub
+                </span>
+            </a>
+
+            <a href="https://scratch.mit.edu/users/martin_mmc/" target="_blank" rel="noopener noreferrer" class="link-btn">
+                <span class="btn-label">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                    </svg>
+                    Scratch
+                </span>
+            </a>
         </div>
     </div>
 
